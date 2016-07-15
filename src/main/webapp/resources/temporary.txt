@@ -1,0 +1,32 @@
+		/*
+		 * temporary
+		 * */
+		// use for creating a administrator user
+
+		UserProfile profile = new UserProfile();
+		
+		profile.setFirstName("Khozema");
+		profile.setLastName("Nullwala");
+		profile.setRegisterPassword("admin");
+		profile.setContactNumber("9819270435");
+		profile.setEmailAddress("Khozema.Nullwala@niit.com");
+		profile.setNickname("rustyamigo");						
+		this.userService.add(profile);
+		
+
+		/*
+		 * Code to create a new category for testing purpose 
+		 * 
+		 * */
+		
+		Category category = new Category();
+		category.setName("Angular JS");		
+		category.setDescription("To solve the angular js issues!");
+		
+		this.categoryService.add(category);
+
+		category = new Category();
+		category.setName("jQuery");
+		category.setDescription("To solve the jQuery!");
+		this.categoryService.add(category);
+

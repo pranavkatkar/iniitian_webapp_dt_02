@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	
+	<!-- To work with @Autowired and other annotations -->
+	<context:annotation-config/>
+	
+	<context:component-scan base-package="com.iniitian"/>
+	<mvc:annotation-driven/>
+
+
+
+	<!-- To work with oracle database -->
+	<!-- Database configuration will come here -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="system" />
+		<property name="password" value="oraclexe" />
+	</bean>
+
+	<!-- Configure the SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.iniitian</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Transaction Manager Bean -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+			<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
+
+	<!-- user defined classes -->
+	<!-- working with user role and profile -->
+	<bean id="userProfileDAO" class="com.iniitian.dao.UserProfileDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+ 	<bean id="userProfileService" class="com.iniitian.service.UserProfileServiceImpl">
+		<property name="userProfileDAO" ref="userProfileDAO"/>
+	</bean>
+
+	<bean id="roleDAO" class="com.iniitian.dao.RoleDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+ 	<bean id="roleService" class="com.iniitian.service.RoleServiceImpl">
+		<property name="roleDAO" ref="roleDAO"/>
+	</bean>
+
+	<bean id="userDAO" class="com.iniitian.dao.UserDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+ 	<bean id="userService" class="com.iniitian.service.UserServiceImpl">
+		<property name="userDAO" ref="userDAO"/>
+	</bean>
+
+
+	<!-- working with blog and forums -->
+
+	<bean id="categoryDAO" class="com.iniitian.dao.CategoryDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+ 	<bean id="categoryService" class="com.iniitian.service.CategoryServiceImpl">
+		<property name="categoryDAO" ref="categoryDAO"/>
+	</bean>
+
+	<bean id="forumDAO" class="com.iniitian.dao.ForumDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+ 	<bean id="forumService" class="com.iniitian.service.ForumServiceImpl">
+		<property name="forumDAO" ref="forumDAO"/>
+	</bean>
+
+	<bean id="blogDAO" class="com.iniitian.dao.BlogDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+ 	<bean id="blogService" class="com.iniitian.service.BlogServiceImpl">
+		<property name="blogDAO" ref="blogDAO"/>
+	</bean>
+
+	<bean id="commentDAO" class="com.iniitian.dao.CommentDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+ 	<bean id="commentService" class="com.iniitian.service.CommentServiceImpl">
+		<property name="commentDAO" ref="commentDAO"/>
+	</bean>
+
+	<!-- to load static resources -->
+	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>
+
+</beans>
