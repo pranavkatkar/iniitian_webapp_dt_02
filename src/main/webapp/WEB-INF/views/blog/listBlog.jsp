@@ -8,15 +8,16 @@
 <spring:url value="/resources/images" var="images" />
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="webapp">
 
 <head>
 
 	<%@include file="../shared/header.jsp" %>
 
 	<jsp:include page="../shared/title.jsp">
-		<jsp:param value="Forum" name="title"/>
+		<jsp:param value="Blog" name="title"/>
 	</jsp:include>
+			
 	
 </head>
 
@@ -26,22 +27,25 @@
 
     <!-- Page Content -->
     <div class="container">
+        <div class="row" ng-controller= "PublicBlogListController as listBlogCtrl">
+            <!-- Blog Post Content Column -->
+            <div class="col-lg-12" ng-repeat="blog in listBlogCtrl.blogs">                
+                <!-- Title -->
+                <h3>                
+                	<a ng-href="${contextPath}/view/blog/{{blog.blogId}}">{{blog.title}}</a>                
+                </h3>
 
-        <div class="row">	
-        	<div class="col-xs-12">
-				<h3>Forum will come here</h3>
-				<hr/>
-				<p>Lorem ipsum dolor.</p>        	
-        	</div>					
+                <!-- Author -->
+                <p class="lead">
+                    by {{blog.firstName}} {{blog.lastName}}
+                </p>
+                <hr>
+                <!-- Date/Time -->
+                <p><span class="glyphicon glyphicon-time"></span> Posted on {{blog.createdAt | date:fullDate}}</p>
+                <hr>
+            </div>
         </div>
-        <div class="row">
-        	<div class="col-xs-12">
-        		<a href="${contextPath}/admin/forum/add">Create New</a>
-        	</div>
-        </div>
-        
         <!-- /.row -->
-
 
         <!-- Footer -->
         
@@ -52,6 +56,9 @@
     <!-- /.container -->
 
 	<%@include file="../shared/scripts.jsp" %>
+	<script src="${js}/angular.min.js"></script>
+	<script src="${js}/controller/blog.js"></script>
+
 
 </body>
 

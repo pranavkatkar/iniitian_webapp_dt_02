@@ -6,10 +6,12 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
+@Table (name = "blog_comment")
 public class Comment {
 	
 	@Id
@@ -23,7 +25,7 @@ public class Comment {
 	@Column(name = "user_id") 
 	private String userId;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd MMM, yyyy HH:mm:ss")
 	private Date commentedAt;
 
 	

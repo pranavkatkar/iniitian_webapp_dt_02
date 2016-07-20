@@ -9,7 +9,7 @@
 <spring:url value="/resources/images" var="images" />
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="webapp	">
 
 <head>
 
@@ -29,13 +29,14 @@
 	<div class="container">
 
 		<div class="row">
-			<div class="col-xs-12">
+			<div class="col-xs-offset-2 col-xs-8">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">${operation} Form</h3>
+						<h3 class="panel-title">${operation} Forum</h3>
 					</div>
 					<div class="panel-body">
-						<form:form action="${contextPath}/admin/forum" modelAttribute="forum" cssClass="form-horizontal" id="frmForum" method="POST">
+						<form:form action="${contextPath}/admin/forum/save" modelAttribute="forum" cssClass="form-horizontal" id="frmForum" method="POST">
+							<form:hidden path="id"/><form:hidden path="newForum"/><form:hidden path="createdAt"/>
 							<div class="form-group has-feedback">
 								<label for="title" class="col-md-4 control-label">Enter Title: </label>
 								<div class="col-md-8">
@@ -46,20 +47,22 @@
 							<div class="form-group has-feedback">
 								<label for="description" class="col-md-4 control-label">Enter Description: </label>
 								<div class="col-md-8">
-									<form:input path="description" cssClass="form-control" placeholder="Enter Forum Description" id="description"/>
+									<form:textarea path="description" cssClass="form-control" placeholder="Enter Forum Description" id="description" rows="5"/>
 									<span id="description1" class="glyphicon form-control-feedback" aria-hidden="true"></span>
 								</div>
 							</div>
 							
 							<div class="form-group">
-								<label for="category">Select Category</label>				
-							    <form:select path="categoryId" cssClass="form-control" id="category">
-									<form:options items="${categories}"/>		    		
-							    </form:select>
+								<label for="category" class="control-label col-md-4">Select Category</label>
+								<div class="col-md-8">				
+								    <form:select path="categoryId" cssClass="form-control" id="category">
+										<form:options items="${categories}"/>		    		
+								    </form:select>
+							    </div>
 							</div>							
 							<div class="form-group">							
-								<div class="col-md-offset-2">
-									<input type="submit" value="Add Forum"/>
+								<div class="col-md-offset-4 col-md-8">
+									<input type="submit" value="${operation} Forum" class="btn btn-primary"/>
 								</div>								
 							</div>								
 						</form:form>
@@ -79,7 +82,8 @@
 	<!-- /.container -->
 
 	<%@include file="../shared/scripts.jsp"%>
-
+	<script src="${js}/angular.min.js"></script>
+	<script src="${js}/controller/forum.js"></script>
 </body>
 
 </html>

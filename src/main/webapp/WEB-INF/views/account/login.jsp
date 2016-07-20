@@ -40,6 +40,13 @@
 						<h3 class="panel-title">Log-In to access the content of this website.</h3>
 					</div>
 					<div class="panel-body">
+			    		<c:if test="${not empty error}">
+							<div class="alert alert-danger" role="alert">
+							  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+							  <span class="sr-only">Error:</span>
+							  	${error}
+							</div>
+		    			</c:if>						
 						<form class="form-horizontal" id="frmLogin" method="POST" action="${contextPath}/login" >
 							<div class="form-group has-feedback">
 								<label for="username" class="col-md-2 control-label">Username</label>
@@ -101,6 +108,7 @@
 									<form:input path="emailAddress" cssClass="form-control" placeholder="Enter Email Address" id="emailAddress"/>
 <!-- 									<input type="email" name="emailAddress" class="form-control" placeholder="Enter Email Address" id="emailAddress"/> -->
 									<span id="emailAddress1" class="glyphicon form-control-feedback" aria-hidden="true"></span>
+									<form:errors path="emailAddress" element="span" cssClass="help-block has-error" />
 								</div>
 							</div>
 							

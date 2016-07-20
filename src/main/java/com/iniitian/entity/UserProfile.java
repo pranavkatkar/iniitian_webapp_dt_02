@@ -9,13 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user_profile")
@@ -44,19 +46,10 @@ public class UserProfile {
 	
 	private char gender = 'M';
 	
-	
-	public char getGender() {
-		return gender;
-	}
-
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd MMM, yyyy HH:mm:ss")
 	private Date createdAt;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd MMM, yyyy HH:mm:ss")
 	private Date modifiedAt;
 	
 	private Long noOfFriends;
@@ -67,21 +60,40 @@ public class UserProfile {
 	
 	private String contactNumber;
 	
-	public String getContactNumber() {
-		return contactNumber;
-	}
-
-	public void setContactNumber(String contactNumber) {
-		this.contactNumber = contactNumber;
-	}
-
 	@Transient
 	private String registerPassword;
 	
 	@Transient
 	private String confirmPassword;
 
+
+	@Transient
+	@JsonIgnore
+	private MultipartFile file;
+		
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public char getGender() {
+		return gender;
+	}
+
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
 	
+	public String getContactNumber() {
+		return contactNumber;
+	}
+
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}	
 	
 	public String getRegisterPassword() {
 		return registerPassword;

@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,6 +46,13 @@ public class AccountController {
 		if(results.hasErrors()) {
 			return "account/login";
 		}
+		
+		
+		User exist = this.userService.getByUsername(profile.getEmailAddress());
+		if(exist !=null) {
+			results.addError(new FieldError("profile", "emailAddress", "Email address already exists!"));
+			return "account/login";
+		}		
 
 		logger.error(profile.toString());
 		this.userService.add(profile);
@@ -71,6 +79,13 @@ public class AccountController {
 	    }
 	    //You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	    return "redirect:/home";
+	}	
+
+	@RequestMapping("/loginError") 
+	public String loginError(Model model) {
+		model.addAttribute("error", "Invalid Login Details!");
+		model.addAttribute("profile", new UserProfile());
+		return "account/login";		
 	}	
 	
 }	

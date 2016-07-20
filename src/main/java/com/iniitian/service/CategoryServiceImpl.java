@@ -39,6 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	@Transactional
 	public Map<String, String> getCategories() {		
 		List<Category> categoryList = this.getAll();
 		LinkedHashMap<String,String> map = new LinkedHashMap<String,String>();

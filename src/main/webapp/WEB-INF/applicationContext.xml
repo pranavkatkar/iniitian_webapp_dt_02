@@ -4,9 +4,11 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	
@@ -14,7 +16,17 @@
 	<context:annotation-config/>
 	
 	<context:component-scan base-package="com.iniitian"/>
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven>
+  		<mvc:message-converters>
+		    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		        <property name="objectMapper">
+		            <bean class="com.iniitian.json.HibernateAwareObjectMapper" />
+		        </property>
+		    </bean>
+		</mvc:message-converters>	
+ 	</mvc:annotation-driven>
+	
+	
 
 
 
@@ -107,6 +119,42 @@
  	<bean id="commentService" class="com.iniitian.service.CommentServiceImpl">
 		<property name="commentDAO" ref="commentDAO"/>
 	</bean>
+
+
+	<bean id="postDAO" class="com.iniitian.dao.PostDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+ 	<bean id="postService" class="com.iniitian.service.PostServiceImpl">
+		<property name="postDAO" ref="postDAO"/>
+	</bean>
+
+
+
+	<!-- Sending email configuration -->
+    
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com"/>
+        <property name="port" value="587"/>
+        <property name="username" value="pvgcost@gmail.com"/>
+        <property name="password" value="pvgcostfeb201628"/>
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+    
+    <!-- Configuration for web-sockets -->
+    <websocket:message-broker application-destination-prefix="/app">
+        <websocket:stomp-endpoint path="/chat">
+            <websocket:sockjs/>
+        </websocket:stomp-endpoint>
+        <websocket:simple-broker prefix="/topic"/>
+    </websocket:message-broker>    
 
 	<!-- to load static resources -->
 	<mvc:resources location="/resources/" mapping="/resources/**"></mvc:resources>

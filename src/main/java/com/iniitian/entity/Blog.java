@@ -8,6 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Blog {
@@ -16,20 +22,37 @@ public class Blog {
 	@Column(name = "blog_id")
 	private String id;
 	
+	
+	@NotBlank(message = "Please enter title!")
 	private String title;
 	
+	@NotBlank(message = "Please enter description!")
 	private String description;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd MMM, yyyy HH:mm:ss")
 	private Date createdAt;
 		
-	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd MMM, yyyy HH:mm:ss")
 	private Date modifiedAt;
 	
 	@Column(name = "user_id")
 	private String userId;
 
+	@Transient
+	@JsonIgnore
+	private boolean newBlog;
 	
+	
+	public boolean isNewBlog() {
+		return newBlog;
+	}
+
+
+	public void setNewBlog(boolean newBlog) {
+		this.newBlog = newBlog;
+	}
+
+
 	public Blog() {
 		this.id = "BLG" + UUID.randomUUID().toString().substring(24).toUpperCase();
 	}

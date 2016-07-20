@@ -30,3 +30,21 @@
 		category.setDescription("To solve the jQuery!");
 		this.categoryService.add(category);
 
+
+		/*
+		 * code to add a dummy forum for testing 
+		 * */
+		
+		Forum forum = new Forum();
+		forum.setTitle("Angular JS for beginners!");
+		forum.setDescription("This forum will try to solve all the basics errors regarding angular js!");
+		forum.setCreatedAt(new Date());
+		forum.setModifiedAt(new Date());
+		forum.setCategoryId("CTG5E1230A90D1D");		
+		this.forumService.add(forum);
+
+
+
+
+
+

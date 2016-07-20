@@ -2,7 +2,6 @@ package com.iniitian.dao;
 
 import java.util.List;
 
-import com.iniitian.entity.Category;
 import com.iniitian.entity.Forum;
 
 public interface ForumDAO {

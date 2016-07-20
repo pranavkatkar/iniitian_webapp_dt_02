@@ -1,5 +1,6 @@
 package com.iniitian.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,10 @@ public class BlogServiceImpl implements BlogService {
 	@Override
 	@Transactional
 	public void add(Blog blog) {
+		if(blog.isNewBlog()) {
+			blog.setCreatedAt(new Date());
+		}
+		blog.setModifiedAt(new Date());		
 		this.blogDAO.add(blog);
 	}
 

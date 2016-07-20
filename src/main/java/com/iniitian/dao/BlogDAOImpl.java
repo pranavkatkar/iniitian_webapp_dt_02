@@ -26,7 +26,7 @@ public class BlogDAOImpl implements BlogDAO {
 
 	@Override
 	public List<Blog> getAll() {		
-		return this.sessionFactory.getCurrentSession().createQuery("FROM Blog").list();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM Blog ORDER BY createdAt DESC").list();
 	}
 
 	@Override

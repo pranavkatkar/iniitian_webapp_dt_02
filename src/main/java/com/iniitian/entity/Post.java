@@ -5,9 +5,14 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Post {
@@ -16,15 +21,15 @@ public class Post {
 	@Column(name = "post_id")
 	private String id;
 	
-	private String content;
+	private String content;	
 	
 	@Column(name = "forum_id")
 	private String forumId;
-	
+		
 	@Column(name = "user_id")
 	private String userId;
-	
-	@Temporal(TemporalType.TIMESTAMP)
+		
+	@DateTimeFormat(pattern = "dd MMM, yyyy HH:mm:ss")
 	private Date postedAt;
 
 	
@@ -48,22 +53,26 @@ public class Post {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
+	
 	public String getForumId() {
 		return forumId;
 	}
+
 
 	public void setForumId(String forumId) {
 		this.forumId = forumId;
 	}
 
+
 	public String getUserId() {
 		return userId;
 	}
 
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
 
 	public Date getPostedAt() {
 		return postedAt;

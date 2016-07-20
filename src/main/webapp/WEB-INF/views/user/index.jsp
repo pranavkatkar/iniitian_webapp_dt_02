@@ -18,6 +18,10 @@
 	<jsp:param value="${profile.firstName}" name="title" />
 </jsp:include>
 
+	<script>
+		window.userId = '${profile.id}'; 
+	</script>
+
 </head>
 
 <body>
@@ -77,10 +81,11 @@
 										</tr>
 										<tr>
 											<td colspan="2">
-												<button class="btn btn-primary" >Friends : ${profile.noOfFriends}</button>
+<%-- 												<button class="btn btn-primary" >Friends : ${profile.noOfFriends}</button>
 												<button class="btn btn-primary" >Blogs : ${profile.noOfBlogs}</button>
 												<button class="btn btn-primary" >Forum Posts : ${profile.noOfBlogs}</button>
-												<a href="${contextPath}/user/edit/${profile.id}" class="btn btn-warning pull-right">Edit Profile</a>
+ --%>												
+ 												<a href="${contextPath}/user/edit/${profile.id}" class="btn btn-warning pull-right">Edit Profile</a>
 											</td>											
 										</tr>										
 									</tbody>

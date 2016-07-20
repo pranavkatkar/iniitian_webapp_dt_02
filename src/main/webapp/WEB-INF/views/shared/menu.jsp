@@ -18,10 +18,10 @@
                         <a href="${contextPath}/home">Home</a>
                     </li>
                     <li>
-                        <a href="${contextPath}/blogs">Blog</a>
+                        <a href="${contextPath}/all/blogs">Blog</a>
                     </li>
                     <li>
-                        <a href="${contextPath}/forums">Forum</a>
+                        <a href="${contextPath}/public/forums">Forum</a>
                     </li>
                     <sec:authorize access="isAuthenticated() and hasRole('ROLE_USER')">
 	                    <li>
@@ -44,6 +44,14 @@
                     <li>
                         <a href="${contextPath}/contact">Contact</a>
                     </li>
+                    <sec:authorize access="hasRole('ROLE_USER')">
+	                    <li>
+	                        <a href="${contextPath}/user/viewChat">
+	                        	<span class="glyphicon glyphicon-user"></span> Join Chat
+	                        </a>
+	                    </li>
+                    </sec:authorize>
+
                     <sec:authorize access="isAnonymous()">
 	                    <li>
 	                        <a href="${contextPath}/login">

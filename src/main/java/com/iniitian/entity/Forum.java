@@ -8,8 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Forum {
@@ -25,10 +29,10 @@ public class Forum {
 	@NotBlank(message = "Please enter the description!")
 	private String description;
 	
-	@Temporal(TemporalType.TIMESTAMP)	
+	@DateTimeFormat(pattern = "dd MMM, yyyy HH:mm:ss")
 	private Date createdAt;
 	
-	@Temporal(TemporalType.TIMESTAMP)	
+	@DateTimeFormat(pattern = "dd MMM, yyyy HH:mm:ss")
 	private Date modifiedAt;
 	
 	public Forum() {
@@ -86,6 +90,29 @@ public class Forum {
 	public void setCategoryId(String categoryId) {
 		this.categoryId = categoryId;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "Forum [id=" + id + ", title=" + title + ", description=" + description + ", createdAt=" + createdAt
+				+ ", modifiedAt=" + modifiedAt + ", categoryId=" + categoryId + "]";
+	}
+	
+	
+	// not needed just for edit and add
+	@Transient
+	@JsonIgnore
+	private boolean newForum;
+
+	public boolean isNewForum() {
+		return newForum;
+	}
+
+	public void setNewForum(boolean newForum) {
+		this.newForum = newForum;
+	}
+	
 			
 	
 }

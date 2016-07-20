@@ -18,6 +18,9 @@ public class UserServiceImpl implements UserService {
 	private RoleService roleService;
 	
 	@Autowired
+	private EmailServiceImpl mailService;
+	
+	@Autowired
 	private UserDAO userDAO;
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
@@ -67,12 +70,6 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(profile.getRegisterPassword());
 		user.setEnabled(true);
 
-		/*
-		 * ---------------------------------------------------------
-		 * Will shoot an email here to work with activation right
-		 * now by default the user profile will be activated
-		 * ---------------------------------------------------------
-		 * */
 		
 		
 		// set the details about user and profile to and from for bi-directional
@@ -90,6 +87,15 @@ public class UserServiceImpl implements UserService {
 		
 		this.roleService.add(role);
 		this.userDAO.add(user);
+		
+		/*
+		 * ---------------------------------------------------------
+		 * Will shoot an email here to work with activation right
+		 * now by default the user profile will be activated
+		 * ---------------------------------------------------------
+		 * */
+		this.mailService.sendMail(profile.getEmailAddress(), "NEW USER REGISTRATION", "Thanks for registering with KZNConnect!");
+		
 	}
 
 	@Override

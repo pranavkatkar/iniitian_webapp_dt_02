@@ -27,7 +27,7 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public List<Comment> getComments(String blogId) {
-		return this.sessionFactory.getCurrentSession().createQuery("FROM Comment WHERE blogId=?").setParameter(0, blogId).list();
+		return this.sessionFactory.getCurrentSession().createQuery("FROM Comment WHERE blogId=? ORDER BY commentedAt DESC").setParameter(0, blogId).list();
 	}
 
 	@Override

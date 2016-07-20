@@ -1,0 +1,31 @@
+USRBFCEDB5174D9
+
+insert into post(post_id, content, forum_id, postedAt, user_id) values('PSTBFAEDB5174D9', 'This is a post for a forum', 'FRM72603A72265B' ,TO_DATE('2016-07-16', 'YYYY-MM-DD'), 'USRBFCEDB5174D9') 
+
+
+SELECT u.username, u.user_id, p.post_id, p.content, p.postedAt from post p INNER JOIN user_auth u ON p.user_id = u.user_id and p.forum_id = 'FRM72603A72265B'
+
+
+
+
+#
+#	Blog entry
+#
+
+insert into blog(blog_id, user_id, title, description, createdAt, modifiedAt) values('BLGBFAEDB5174D9', 'USRBFCEDB5174D9' ,'Blog Title One', 'This is a dummy post for the blog' ,TO_DATE('2016-07-18', 'YYYY-MM-DD'), TO_DATE('2016-07-18', 'YYYY-MM-DD'));
+
+
+insert into blog(blog_id, user_id, title, description, createdAt, modifiedAt) values('BLGBFAED25174D9', 'USRBFCEDB5174D9' ,'Blog Title Two', 'This is a dummy post for the blog number two' ,TO_DATE('2016-07-18', 'YYYY-MM-DD'), TO_DATE('2016-07-18', 'YYYY-MM-DD'));
+
+
+insert into blog_comment (id, blog_id, commentedAt, content, user_id) values ('CMTBFAED28174D9', 'BLGBFAED25174D9', TO_DATE('2016-07-19', 'YYYY-MM-DD'), 'Awesome blog comment one!', 'USRBFCEDB5174D9');
+insert into blog_comment (id, blog_id, commentedAt, content, user_id) values ('CMTBFAED28174D9', 'BLGBFAED25174D9', TO_DATE('2016-07-19', 'YYYY-MM-DD'), 'Awesome blog comment two!', 'USRBFCEDB5174D9');
+
+
+
+insert into post
+
+
+
+
+

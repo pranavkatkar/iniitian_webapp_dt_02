@@ -1,5 +1,6 @@
 package com.iniitian.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class ForumServiceImpl implements ForumService {
 	@Override
 	@Transactional
 	public void add(Forum forum) {
+		if(forum.isNewForum()) {
+			forum.setCreatedAt(new Date());
+		}
+		forum.setModifiedAt(new Date());
 		this.forumDAO.add(forum);
 	}
 
